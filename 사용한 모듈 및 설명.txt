@@ -1,0 +1,6 @@
+모듈
+express : backend framwork
+nodemon : 파일 수정시 서버 자동 재실행
+body-parser : post request 요청시 request body를 받을 수 있도록 해주는 모듈
+ejs : 서버에서 html응답을 줄 때 적절한 데이터를 포함해서 보낼 때 사용
+    express에서 작동하는 템플릿엔진
