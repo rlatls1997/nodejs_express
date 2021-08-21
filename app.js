@@ -1,6 +1,19 @@
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
+var mysql = require("mysql");
+
+//*************************************************mysql 연결설정
+var connection = mysql.createConnection({
+  host: "localhost",
+  port: 3306,
+  user: "root",
+  password: "pass4360",
+  database: "jsman",
+});
+
+connection.connect();
+//*************************************************mysql 연결설정
 
 app.listen(3000, function () {
   console.log("start!! express server on port 3000");
@@ -35,10 +48,21 @@ app.post("/email_post", function (req, res) {
 });
 
 app.post("/ajax_send_email", function (req, res) {
-  console.log(req.body.email);
-  //check validation about input value => select db
-  var responseData = { result: "ok", email: req.body.email };
+  var email = req.body.email;
+  var responseData = {};
 
-  //서버에서 보낼땐 stringify 안해줘도됨
-  res.json(responseData);
+  var query = connection.query(
+    'select name from user where email ="' + email + '"',
+    function (err, rows) {
+      if (err) throw err;
+      if (rows[0]) {
+        responseData.result = "ok";
+        responseData.name = rows[0].name;
+      } else {
+        responseData.result = "none";
+        responseData.name = "";
+      }
+      res.json(responseData);
+    }
+  );
 });
