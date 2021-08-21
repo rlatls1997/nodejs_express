@@ -7,10 +7,39 @@
     <title>email form</title>
   </head>
   <body>
-    <form action="/email_post" method = "post">
-        email :<input type="text" name="email"><br/>
-        submit <input type ="submit">
+    <form action="/email_post" method="post">
+      email :<input type="text" name="email" /><br />
+      submit <input type="submit" />
     </form>
 
+    <button class="ajaxsend">ajaxsend</button>
+
+    <div class='result'></div>
+
+    <script>
+      document
+        .querySelector(".ajaxsend")
+        .addEventListener("click", function () {
+          //첫 번째 form태그의 첫 번째 input element의 value를 나타낸다.
+          var inputdata = document.forms[0].elements[0].value;
+          sendAjax("http://127.0.0.1:3000/ajax_send_email", inputdata);
+        });
+
+      function sendAjax(url, data) {
+        var data = { email: data };
+        data = JSON.stringify(data);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(data);
+
+        xhr.addEventListener("load", function () {
+         var result = JSON.parse(xhr.responseText);
+         if(result.result !== "ok") return;
+         document.querySelector(".result").innerHTML = result.email;
+        });
+      }
+    </script>
   </body>
 </html>

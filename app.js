@@ -12,7 +12,7 @@ app.use(express.static("public"));
 //express에서 bodyparser를 쓰겠다고 알림
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.set('view engine', 'ejs');
+app.set("view engine", "ejs");
 
 app.get("/", function (req, res) {
   //res.send("<h1>hi friend!</h1>")
@@ -27,9 +27,18 @@ app.get("/main", function (req, res) {
 });
 
 app.post("/email_post", function (req, res) {
-    console.log(req.body.email);
+  console.log(req.body.email);
   //res.send("<h1>welcome ! </h1>" + req.body.email);
 
   //res.send가 아닌 res.render로 ejs에 email값 전달
-    res.render('email.ejs', {'email' : req.body.email})
+  res.render("email.ejs", { email: req.body.email });
+});
+
+app.post("/ajax_send_email", function (req, res) {
+  console.log(req.body.email);
+  //check validation about input value => select db
+  var responseData = { result: "ok", email: req.body.email };
+
+  //서버에서 보낼땐 stringify 안해줘도됨
+  res.json(responseData);
 });
