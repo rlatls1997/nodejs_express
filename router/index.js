@@ -5,9 +5,11 @@ var app = express();
 var router = express.Router();
 //상대경로로 쉽게 이동하기 위한 모듈
 var path = require("path");
+
 var main = require("./main/main");
 var email = require("./email/email");
 var form = require("./form/form");
+var join = require("./join/index");
 
 router.get("/", function (req, res) {
   //res.send("<h1>hi friend!</h1>")
@@ -21,5 +23,6 @@ router.get("/", function (req, res) {
 router.use("/main", main);
 router.use("/email", email);
 router.use("/form", form);
+router.use("/join", join);
 
 module.exports = router;
