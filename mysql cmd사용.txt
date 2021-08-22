@@ -1,0 +1,12 @@
+mysql 접속
+mysql -u root -p
+
+schema 조회
+show databases;
+
+schema 생성
+create database 스키마네임;
+
+schema 선택
+user 스키마네임;
+
