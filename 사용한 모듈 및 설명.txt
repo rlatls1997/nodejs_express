@@ -5,3 +5,17 @@ body-parser : post request 요청시 request body를 받을 수 있도록 해주
 ejs : 서버에서 html응답을 줄 때 적절한 데이터를 포함해서 보낼 때 사용
     express에서 작동하는 템플릿엔진
 mysql : mysql DBMS 연동
+passport : 인증 관련된 모듈을 처리
+passport-local : 소셜로그인이 아닌 일반적인 로그인을 처리
+express-session : 세션관련 처리
+connect-flash : 에러관련 처리
+
+
+옵션
+--save : 설치한 module목록을 package.json에 저장
+    dependencies 목록에 저장됨
+
+--save-dev : 설치한 module목록을 package.json에 저장
+    devDependencies 목록에 저장됨
+    개발단계에서만 사용하는 module목록을 저장하는 용도로 사용됨
+    운영 및 배포시 해당 플러그인이 포함되지 않음(빌드시 해당모듈이 패키지에 포함되지 않고 빌드됨)
