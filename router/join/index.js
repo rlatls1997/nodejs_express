@@ -25,11 +25,16 @@ router.post("/", function (req, res) {
   var name = body.name;
   var password = body.password;
 
+  var sql = { email: email, name: name, pw: password };
+
   var query = connection.query(
-    `insert into user (email, name, pw) values ("${email}","${name}","${password}")`,
+    //`insert into user (email, name, pw) values ("${email}","${name}","${password}")`,
+    "insert into user set ?",
+    sql,
     function (err, rows) {
-        if(err) { throw err;}
-        console.log(("ok db insert"))       
+      if (err) throw err;
+      //res.send가 아닌 res.render로 ejs에 값 전달
+      res.render("welcome.ejs", { name: name, id: rows.insertId });
     }
   );
 });
