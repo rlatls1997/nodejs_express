@@ -3,6 +3,10 @@ var app = express();
 var bodyParser = require("body-parser");
 var mysql = require("mysql");
 
+//외부 router module import
+var main = require('./router/main')
+var email = require('./router/email')
+
 //*************************************************mysql 연결설정
 var connection = mysql.createConnection({
   host: "localhost",
@@ -27,42 +31,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 
+//main으로 들어오면 router/main으로 처리를 하라는 말
+//router/main.js 파일의 /경로인 메소드 처리
+//*app.js에서 설정한 bodyparser나 static파일 설정은 하위 router모듈에도 적용됨 */
+app.use('/main', main);
+app.use('/email', email);
+
 app.get("/", function (req, res) {
   //res.send("<h1>hi friend!</h1>")
   //__dirname은 현재 dir절대경로, get요청시 main.html파일 제공
   res.sendFile(__dirname + "/public/main.html");
-});
-
-app.get("/main", function (req, res) {
-  //res.send("<h1>hi friend!</h1>")
-  //__dirname은 현재 dir절대경로, get요청시 main.html파일 제공
-  res.sendFile(__dirname + "/public/main.html");
-});
-
-app.post("/email_post", function (req, res) {
-  console.log(req.body.email);
-  //res.send("<h1>welcome ! </h1>" + req.body.email);
-
-  //res.send가 아닌 res.render로 ejs에 email값 전달
-  res.render("email.ejs", { email: req.body.email });
-});
-
-app.post("/ajax_send_email", function (req, res) {
-  var email = req.body.email;
-  var responseData = {};
-
-  var query = connection.query(
-    'select name from user where email ="' + email + '"',
-    function (err, rows) {
-      if (err) throw err;
-      if (rows[0]) {
-        responseData.result = "ok";
-        responseData.name = rows[0].name;
-      } else {
-        responseData.result = "none";
-        responseData.name = "";
-      }
-      res.json(responseData);
-    }
-  );
 });
