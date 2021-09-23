@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>email form</title>
+  </head>
+  <body>
+    <form action="/login" method="post">
+      email :<input type="text" name="email" /><br />
+      password :<input type="password" name="password" /><br />
+    </form>
+
+    <button class="ajaxsend">login</button>
+
+    <div class="result"></div>
+
+    <script>
+      document
+        .querySelector(".ajaxsend")
+        .addEventListener("click", function () {
+          //첫 번째 form태그의 첫 번째 input element의 value를 나타낸다.
+          var email = document.getElementsByName("email")[0].value;
+          var password = document.getElementsByName("password")[0].value;
+          sendAjax("http://localhost:3000/login", {
+            email: email,
+            password: password,
+          });
+        });
+
+      function sendAjax(url, data) {
+        data = JSON.stringify(data);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(data);
+
+        xhr.addEventListener("load", function () {
+          var result = JSON.parse(xhr.responseText);
+          var resultDiv = document.querySelector(".result");
+          if (result.email) {
+            window.location.href = "/main";
+          } else if (xhr.status === 401) {
+            resultDiv.innerHTML =
+              result + `<div class="signup"><a href="/join>Sign up</a></div>`;
+          } else resultDiv.innerHTML = result;
+        });
+      }
+    </script>
+  </body>
+</html>

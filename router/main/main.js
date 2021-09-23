@@ -6,6 +6,7 @@ var router = express.Router();
 //상대경로로 쉽게 이동하기 위한 모듈
 var path = require("path");
 
+//main page는 login이 될 때만 접근이 가능하게 하자
 router.get("/", function (req, res) {
   //res.send("<h1>hi friend!</h1>")
   //__dirname은 현재 dir절대경로, get요청시 main.html파일 제공
