@@ -10,7 +10,8 @@ var main = require("./main/main");
 var email = require("./email/email");
 var form = require("./form/form");
 var join = require("./join/index");
-var login = require("./login/index")
+var login = require("./login/index");
+var logout = require("./logout/index");
 
 router.get("/", function (req, res) {
   //res.send("<h1>hi friend!</h1>")
@@ -26,5 +27,5 @@ router.use("/email", email);
 router.use("/form", form);
 router.use("/join", join);
 router.use("/login", login);
-
+router.use("/logout", logout);
 module.exports = router;

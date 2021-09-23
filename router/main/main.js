@@ -11,10 +11,13 @@ router.get("/", function (req, res) {
   //res.send("<h1>hi friend!</h1>")
   //__dirname은 현재 dir절대경로, get요청시 main.html파일 제공
   var id = req.user;
-  console.log('main js loaded', id);
+  if (!id) {
+    res.render("login.ejs");
+  }
+  console.log("main js loaded", id);
   //path.join 메소드는 두 경로를 합쳐줌
   //res.sendFile(path.join(__dirname, "../../public/main.html"));
-  res.render('main.ejs', {'id' : id})
+  res.render("main.ejs", { id: id });
 });
 
 //router export
